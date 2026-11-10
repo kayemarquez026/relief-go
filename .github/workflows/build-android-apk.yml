@@ -1,3 +1,4 @@
+
 name: Build ReliefGO Android APK
 
 on:
@@ -11,45 +12,76 @@ permissions:
 
 jobs:
   build-apk:
+    name: Build ReliefGO APK
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout source code
       - name: Checkout ReliefGO
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
 
+      # 3. Setup Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
 
+      # 4. Setup Android SDK
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
         with:
-            packages: 'platform-tools'
+          packages: 'platform-tools'
 
+      # 5. Install project dependencies
       - name: Install dependencies
         run: npm ci
 
+      # 6. Check backend URL configuration
+      - name: Validate ReliefGO API URL
+        env:
+          VITE_API_BASE_URL: ${{ vars.RELIEFGO_API_BASE_URL }}
+        run: |
+          if [ -z "$VITE_API_BASE_URL" ]; then
+            echo "::error::RELIEFGO_API_BASE_URL is missing."
+            echo "Add it in GitHub Settings > Secrets and variables > Actions > Variables."
+            exit 1
+          fi
+
+          if [[ ! "$VITE_API_BASE_URL" =~ ^https://.+/api/?$ ]]; then
+            echo "::error::API URL must be an HTTPS address ending in /api."
+            exit 1
+          fi
+
+          echo "ReliefGO API URL is configured."
+
+      # 7. Build Ionic Vue with backend connection
       - name: Build Ionic Vue application
+        env:
+          VITE_API_BASE_URL: ${{ vars.RELIEFGO_API_BASE_URL }}
         run: npm run build
 
+      # 8. Sync Capacitor Android
       - name: Sync Capacitor Android
         run: npx cap sync android
 
+      # 9. Build Android APK
       - name: Build Android Debug APK
         working-directory: android
         run: bash ./gradlew assembleDebug
 
+      # 10. Upload downloadable APK
       - name: Upload ReliefGO APK
         uses: actions/upload-artifact@v4
         with:
           name: ReliefGO-Android-Debug-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 30
