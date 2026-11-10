@@ -128,7 +128,8 @@ describe('Mobile Ionic menu-backed page layout', () => {
         }
       });
       cy.get(target, { timeout: 15000 }).should('be.visible')
-        .should('not.have.class', 'ion-page');
+        .should('have.class', 'ion-page');
+      cy.get('ion-menu:not(.show-menu)').should('have.css', 'pointer-events', 'none');
       cy.get(target).should(($target) => {
         const style = getComputedStyle($target[0]);
         expect(style.pointerEvents, 'main content pointer events').to.not.equal('none');

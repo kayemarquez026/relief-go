@@ -95,7 +95,7 @@
       </div>
     </aside>
 
-    <div id="campaign-admin-main" class="campaign-admin-main rg-menu-page-layout">
+    <div id="campaign-admin-main" class="ion-page campaign-admin-main">
       <ion-header class="rg-header">
         <ion-toolbar class="rg-toolbar">
           <div class="nav-inner">

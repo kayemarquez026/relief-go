@@ -98,7 +98,7 @@
       </div>
     </aside>
 
-    <div class="notification-main rg-menu-page-layout" id="notifications-main">
+    <div class="ion-page notification-main" id="notifications-main">
       <ion-header class="rg-header">
         <nav class="rg-navbar" aria-label="Notifications navigation">
           <div class="nav-identity">

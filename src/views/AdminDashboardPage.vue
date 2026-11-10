@@ -84,7 +84,7 @@
     </aside>
 
     <!-- Admin screen -->
-    <div class="rg-menu-page-layout" id="admin-main">
+    <div class="ion-page" id="admin-main">
       <ion-header class="admin-header">
         <ion-toolbar class="admin-toolbar">
           <div class="navbar-inner">

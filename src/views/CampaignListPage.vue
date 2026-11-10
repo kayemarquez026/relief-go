@@ -49,7 +49,7 @@
       </div>
     </aside>
 
-    <div id="rg-browse-main" class="rg-browse-main rg-menu-page-layout" :class="{ 'has-sidebar': isLoggedIn }">
+    <div id="rg-browse-main" class="ion-page rg-browse-main" :class="{ 'has-sidebar': isLoggedIn }">
       <ion-header class="rg-browse-header">
         <ion-toolbar class="rg-browse-toolbar">
           <div class="rg-topbar">
