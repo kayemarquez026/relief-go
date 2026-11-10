@@ -1333,4 +1333,47 @@ async function handleRegister() {
     transition: none;
   }
 }
+
+/* MOBILE REGISTRATION SCROLLING FIX — allow tall forms to extend vertically. */
+@media (max-width: 760px) {
+  .register-content {
+    --overflow: auto !important;
+  }
+
+  .register-content::part(scroll) {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .register-shell {
+    height: auto !important;
+    min-height: 100%;
+    max-height: none !important;
+    overflow: visible !important;
+    grid-template-rows: 56px auto auto !important;
+  }
+
+  .register-layout {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    grid-template-rows: 94px auto !important;
+  }
+
+  .form-panel {
+    min-height: 0;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .register-footer {
+    height: auto !important;
+    min-height: 30px;
+  }
+}
+
 </style>

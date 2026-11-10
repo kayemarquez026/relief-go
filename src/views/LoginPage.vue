@@ -1001,4 +1001,50 @@ async function handleLogin() {
   .relief-native-input { height: 46px; min-height: 46px; font-size: 13px; }
 }
 
+
+/* MOBILE LOGIN SCROLLING FIX — avoid clipping form fields on small phones. */
+@media (max-width: 760px) {
+  .login-content {
+    --overflow: auto !important;
+  }
+
+  .login-content::part(scroll) {
+    height: auto !important;
+    min-height: 100%;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .login-shell {
+    height: auto !important;
+    min-height: 100%;
+    max-height: none !important;
+    overflow: visible !important;
+    grid-template-rows: 56px auto auto !important;
+  }
+
+  .login-layout {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    grid-template-rows: 88px auto !important;
+  }
+
+  .form-panel {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .form-inner {
+    max-height: none !important;
+  }
+
+  .login-footer {
+    height: auto !important;
+    min-height: 31px;
+  }
+}
+
 </style>

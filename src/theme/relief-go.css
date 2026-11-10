@@ -116,3 +116,21 @@ ion-page:not(.welcome-page) :is(.btn.outline,.card-action:not(.primary-action),.
 .rg-sidebar-logout:hover{background:#ffdfa3}.rg-sidebar-logout:focus-visible{outline:3px solid white;outline-offset:2px}
 .rg-logout-confirmation .alert-button.rg-logout-accept{color:#173729;font-weight:800}
 @media(max-width:720px){ion-page:not(.welcome-page) :is(.card-actions,.record-buttons,.buttons){align-items:stretch}ion-page:not(.welcome-page) :is(.card-actions>a,.card-actions>button){flex:1 1 160px}}
+
+/* RELIEFGO ANDROID SCROLL FIX — restore Ionic native page scrolling.
+   Scoped to compact viewports; maps, dialogs and horizontal carousels keep
+   their own independent scrolling behavior. */
+@media (max-width: 850px) {
+  .ion-page > ion-content {
+    --overflow: auto !important;
+  }
+
+  .ion-page > ion-content::part(scroll) {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .member-app-outlet {
+    min-height: 0 !important;
+  }
+}
