@@ -112,7 +112,7 @@
       </div>
     </aside>
 
-    <div id="audit-admin-main" class="ion-page audit-admin-main">
+    <div id="audit-admin-main" class="audit-admin-main rg-menu-page-layout">
       <ion-header class="rg-header">
         <ion-toolbar class="rg-toolbar">
           <div class="nav-inner">

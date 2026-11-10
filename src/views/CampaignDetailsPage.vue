@@ -64,7 +64,7 @@
             </div>
     </aside>
 
-    <div id="rg-detail-main" class="ion-page rg-detail-main" :class="{ 'has-sidebar': isLoggedIn }">
+    <div id="rg-detail-main" class="rg-detail-main rg-menu-page-layout" :class="{ 'has-sidebar': isLoggedIn }">
       <ion-header class="rg-detail-header">
         <ion-toolbar class="rg-detail-toolbar">
           <div class="rg-details-topbar">

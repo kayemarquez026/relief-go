@@ -90,3 +90,62 @@ describe('ReliefGO mobile scrolling and taps', () => {
     assertCanScroll('.dashboard-content');
   });
 });
+
+// Reproduce mobile scrolling in the authenticated administration pages
+// and in menu-backed campaign screens, not just the public landing pages.
+describe('Mobile Ionic menu-backed page layout', () => {
+  const adminUser = {
+    id: '2df5f51a-f8af-4e06-9fee-81be8335dc78',
+    name: 'Admin Mobile Tester',
+    email: 'mobile-admin@example.com',
+    phone: '09123456789',
+    role: 'admin',
+    is_suspended: false
+  };
+  const routes = [
+    { path: '/admin', target: '#admin-main', content: '.admin-content' },
+    { path: '/admin/campaigns', target: '#campaign-admin-main', content: '.rg-content' },
+    { path: '/admin/users', target: '#users-admin-main', content: '.users-content' },
+    { path: '/admin/reports', target: '#reports-admin-main', content: '.reports-content' },
+    { path: '/admin/audit-logs', target: '#audit-admin-main', content: '.rg-content' },
+    { path: '/notifications', target: '#notifications-main', content: '.rg-content' },
+    { path: '/campaigns', target: '#rg-browse-main', content: '.campaigns-content' },
+    { path: '/campaigns/mobile-test', target: '#rg-detail-main', content: '.details-content' },
+    { path: '/campaigns/mobile-test/transparency', target: '#rg-trans-main', content: '.transparency-content' }
+  ];
+
+  beforeEach(() => {
+    cy.viewport(375, 667);
+    cy.intercept('GET', '**/api/**', { statusCode: 200, body: [] });
+    cy.intercept('GET', '**/api/me', { statusCode: 200, body: adminUser });
+  });
+
+  routes.forEach(({ path, target, content }) => {
+    it(`keeps ${path} interactive and scrollable on mobile`, () => {
+      cy.visit(path, {
+        onBeforeLoad(win) {
+          win.localStorage.setItem('reliefgo_pg_token', 'mobile-admin-smoke-token');
+        }
+      });
+      cy.get(target, { timeout: 15000 }).should('be.visible')
+        .should('not.have.class', 'ion-page');
+      cy.get(target).should(($target) => {
+        const style = getComputedStyle($target[0]);
+        expect(style.pointerEvents, 'main content pointer events').to.not.equal('none');
+      });
+      assertCanScroll(`${target} ${content}`);
+    });
+  });
+
+  it('allows the dashboard action to open campaign management', () => {
+    cy.visit('/admin', {
+      onBeforeLoad(win) {
+        win.localStorage.setItem('reliefgo_pg_token', 'mobile-admin-smoke-token');
+      }
+    });
+    cy.get('#admin-main .hero-actions a[href="/admin/campaigns"]')
+      .should('be.visible').click();
+    cy.location('pathname').should('eq', '/admin/campaigns');
+    cy.get('#campaign-admin-main').should('be.visible');
+  });
+});

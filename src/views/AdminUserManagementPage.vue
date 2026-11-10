@@ -113,7 +113,7 @@
       </div>
     </aside>
 
-    <div id="users-admin-main" class="ion-page users-admin-main">
+    <div id="users-admin-main" class="users-admin-main rg-menu-page-layout">
       <ion-header class="users-header">
         <ion-toolbar class="users-toolbar">
           <div class="nav-inner">
