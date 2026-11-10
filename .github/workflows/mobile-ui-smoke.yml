@@ -19,11 +19,38 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Run Cypress mobile scrolling and click checks
-        uses: cypress-io/github-action@v6
+      - name: Install test dependencies
+        run: npm ci
+      - name: Verify Cypress installation
+        run: npx cypress verify
+      - name: Start Vite and confirm HTTP readiness
+        shell: bash
+        run: |
+          nohup npm run dev -- --host 127.0.0.1 > vite-mobile-test.log 2>&1 < /dev/null &
+          SERVER_PID=$!
+          for i in $(seq 1 60); do
+            if curl --silent --fail http://127.0.0.1:5173/welcome > /dev/null; then
+              echo "Vite ready on port 5173."
+              exit 0
+            fi
+            if ! kill -0 "$SERVER_PID" 2>/dev/null; then
+              echo "Vite exited before becoming ready:"
+              cat vite-mobile-test.log
+              exit 1
+            fi
+            sleep 2
+          done
+          echo "Vite did not become ready:"
+          cat vite-mobile-test.log
+          exit 1
+      - name: Test mobile scroll and tap interactions
+        run: npx cypress run --browser electron --spec tests/e2e/specs/mobile-interaction.cy.ts
+      - name: Upload failure screenshots and Vite diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          install-command: npm ci
-          start: npm run dev -- --host 127.0.0.1
-          wait-on: http://127.0.0.1:5173
-          spec: tests/e2e/specs/mobile-interaction.cy.ts
-          browser: electron
+          name: mobile-ui-failure-diagnostics
+          path: |
+            tests/e2e/screenshots
+            vite-mobile-test.log
+          if-no-files-found: ignore
