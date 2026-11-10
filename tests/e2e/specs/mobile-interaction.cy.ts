@@ -59,7 +59,10 @@ describe('ReliefGO mobile scrolling and taps', () => {
 
   it('lets the user navigate to campaigns by tapping a visible link', () => {
     cy.visit('/welcome');
-    cy.get('a[href="/campaigns"]:visible').first().click();
+    cy.get('.welcome-page .menu-toggle').should('be.visible').click();
+    cy.get('.welcome-page .desktop-nav.nav-open a[href="/campaigns"]')
+      .should('be.visible')
+      .click();
     cy.location('pathname').should('eq', '/campaigns');
   });
 
