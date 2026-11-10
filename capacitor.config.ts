@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'relief-go',
+  appId: 'com.reliefgo.mobile2026',
+  appName: 'ReliefGO',  
   webDir: 'dist'
 };
 
