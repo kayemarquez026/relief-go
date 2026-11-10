@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { IonApp, IonRouterOutlet, IonIcon } from '@ionic/vue';
+import { IonApp, IonRouterOutlet, IonIcon, menuController } from '@ionic/vue';
 import { addCircleOutline, closeOutline, gridOutline, heartOutline, logOutOutline, megaphoneOutline, menuOutline, notificationsOutline, peopleOutline, receiptOutline } from 'ionicons/icons';
 import { currentUser } from './services/authState';
 import { logoutUser } from './services/authService';
@@ -58,7 +58,12 @@ const initials = computed(() => displayName.value.split(/\s+/).slice(0, 2).map(v
 const roleLabel = computed(() => currentUser.value?.role === 'organizer' ? 'ORGANIZER ACCOUNT' : currentUser.value?.role === 'donor' ? 'DONOR ACCOUNT' : 'MEMBER ACCOUNT');
 const workspaceTitle = computed(() => route.path.startsWith('/organizer') ? 'ORGANIZER WORKSPACE' : route.path.startsWith('/donor') ? 'DONOR WORKSPACE' : 'MY DASHBOARD');
 function closeMenu() { mobileNavOpen.value = false; }
-watch(() => route.fullPath, closeMenu);
+// Ionic menus are per-page; an open menu left behind by a route transition
+// can leave its backdrop and disable pointer events on the new page.
+watch(() => route.fullPath, () => {
+  closeMenu();
+  void menuController.close().catch(() => undefined);
+}, { flush: 'post' });
 watch(() => currentUser.value?.uid, uid => { if (uid) startNotificationListener(uid); else stopNotificationListener(); }, { immediate: true });
 async function signOut() {
   if (loggingOut.value || !await confirmLogout()) return;

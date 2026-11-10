@@ -1341,8 +1341,7 @@ async function handleRegister() {
   }
 
   .register-content::part(scroll) {
-    height: auto !important;
-    min-height: 100%;
+    height: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     overscroll-behavior-y: auto !important;
