@@ -1,7 +1,7 @@
 <template>
   <ion-page class="rg-reports-page">
     <!-- Mobile menu with the same admin navigation used on the dashboard. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminReports'"
       content-id="reports-admin-main"
       menu-id="reports-admin-menu"
       type="overlay"

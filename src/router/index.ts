@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { menuController } from '@ionic/vue';
 import type { RouteRecordRaw } from 'vue-router';
 import type { Component } from 'vue';
 
@@ -289,6 +290,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async to => {
+  // Close Ionic menus before the previous routed page is hidden. An open
+  // menu locks pointer events and scrolling on its associated main content.
+  const openMenu = await menuController.getOpen();
+  if (openMenu) {
+    await openMenu.close();
+  }
+
 
   // Public pages do not need to wait for the backend.
   if (!to.meta.requiresAuth && !to.meta.guestOnly) {

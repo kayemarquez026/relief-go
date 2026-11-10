@@ -668,7 +668,7 @@ async function handleRegister() {
 .register-content {
   --background: #fbf0dc;
   --color: #173729;
-  --overflow: hidden;
+  --overflow: auto;
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 0;
@@ -683,8 +683,8 @@ async function handleRegister() {
 
 .register-content::part(scroll) {
   height: 100%;
-  overflow: hidden !important;
-  overscroll-behavior: none;
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto;
 }
 
 .register-shell,

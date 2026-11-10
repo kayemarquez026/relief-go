@@ -1,7 +1,7 @@
 <template>
   <ion-page class="rg-users-page">
     <!-- Mobile administration drawer: same links as Admin Dashboard. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminUserManagement'"
       content-id="users-admin-main"
       menu-id="users-admin-menu"
       type="overlay"

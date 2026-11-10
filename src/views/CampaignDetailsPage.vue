@@ -1,7 +1,7 @@
 <template>
   <ion-page class="relief-details-page">
     <!-- Same ReliefGO Member Workspace navigation as the organizer dashboard. -->
-    <ion-menu v-if="isLoggedIn" menu-id="rg-detail-menu" content-id="rg-detail-main"
+    <ion-menu v-if="isLoggedIn && $route.name === 'CampaignDetails'" menu-id="rg-detail-menu" content-id="rg-detail-main"
       type="overlay" side="start" class="rg-detail-mobile-menu">
       <ion-content class="rg-drawer-content">
         <div class="rg-drawer-shell">

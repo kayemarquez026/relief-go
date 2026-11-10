@@ -1,7 +1,7 @@
 <template>
   <ion-page class="detail-page">
     <!-- Mobile menu with the same admin navigation used on the dashboard. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminCampaignDetails'"
       content-id="details-admin-main"
       menu-id="details-admin-menu"
       type="overlay"

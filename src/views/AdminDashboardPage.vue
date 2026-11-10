@@ -1,7 +1,7 @@
 <template>
   <ion-page class="admin-page">
     <!-- Existing admin menu, restyled. Hover on desktop and tap on touch are preserved. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminDashboard'"
       content-id="admin-main"
       menu-id="admin-menu"
       type="overlay"

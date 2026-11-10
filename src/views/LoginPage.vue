@@ -696,14 +696,14 @@ async function handleLogin() {
 }
 .login-content {
   height: 100%;
-  --overflow: hidden;
+  --overflow: auto;
   --padding-top: 0;
   --padding-bottom: 0;
 }
 .login-content::part(scroll) {
   height: 100%;
-  overflow: hidden !important;
-  overscroll-behavior: none;
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto;
 }
 .login-shell {
   height: 100vh;

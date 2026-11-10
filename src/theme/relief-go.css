@@ -117,13 +117,17 @@ ion-page:not(.welcome-page) :is(.btn.outline,.card-action:not(.primary-action),.
 .rg-logout-confirmation .alert-button.rg-logout-accept{color:#173729;font-weight:800}
 @media(max-width:720px){ion-page:not(.welcome-page) :is(.card-actions,.record-buttons,.buttons){align-items:stretch}ion-page:not(.welcome-page) :is(.card-actions>a,.card-actions>button){flex:1 1 160px}}
 
-/* RELIEFGO ANDROID / MOBILE COMPATIBILITY
-   Let Ionic own vertical scrolling and menu scroll locks.
-   Forcing --overflow on every page can interfere with Ionic menus.
-   Only keep the routed content sized within its viewport. */
+/* MOBILE IONIC CONTENT SIZING
+   Keep the framework's native scrolling and touch behavior intact;
+   do not force height or overflow on the shadow scroll element. */
 @media (max-width: 850px) {
   .ion-page > ion-content {
+    flex: 1 1 auto;
     min-height: 0;
+  }
+
+  .ion-page > ion-content::part(scroll) {
+    -webkit-overflow-scrolling: touch;
   }
 
   .member-app-outlet {

@@ -1,7 +1,7 @@
 <template>
   <ion-page class="admin-campaign-review-page">
     <!-- Same ReliefGO admin navigation as the dashboard and notifications pages. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminCampaignReview'"
       content-id="campaign-admin-main"
       menu-id="campaign-admin-menu"
       type="overlay"

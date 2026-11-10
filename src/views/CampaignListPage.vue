@@ -1,7 +1,7 @@
 <template>
   <ion-page class="relief-campaigns-page">
     <!-- Organizer-friendly member workspace navigation, shared by desktop and mobile. -->
-    <ion-menu v-if="isLoggedIn" content-id="rg-browse-main" menu-id="rg-browse-menu" type="overlay" side="start" class="rg-browse-mobile-menu">
+    <ion-menu v-if="isLoggedIn && $route.name === 'CampaignList'" content-id="rg-browse-main" menu-id="rg-browse-menu" type="overlay" side="start" class="rg-browse-mobile-menu">
       <ion-header class="drawer-head">
         <ion-toolbar class="drawer-toolbar">
           <div class="drawer-brand">Relief<span>GO</span><sup>♥</sup><small>{{ sidebarSection }}</small></div>

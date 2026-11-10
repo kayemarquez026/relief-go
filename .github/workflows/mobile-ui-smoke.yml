@@ -1,0 +1,29 @@
+name: Mobile UI Interaction Smoke
+
+on:
+  push:
+    branches:
+      - reliefgo-apk
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-ui:
+    name: Ionic mobile viewport interaction tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Run Cypress mobile scrolling and click checks
+        uses: cypress-io/github-action@v6
+        with:
+          install-command: npm ci
+          start: npm run dev -- --host 127.0.0.1
+          wait-on: http://127.0.0.1:5173
+          spec: tests/e2e/specs/mobile-interaction.cy.ts
+          browser: electron

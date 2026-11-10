@@ -1,7 +1,7 @@
 <template>
   <ion-page class="rg-audit-page">
     <!-- Mobile drawer. All links and actions match Admin Dashboard. -->
-    <ion-menu
+    <ion-menu v-if="$route.name === 'AdminAuditLogs'"
       content-id="audit-admin-main"
       menu-id="audit-admin-menu"
       side="start"

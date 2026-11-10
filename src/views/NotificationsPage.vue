@@ -2,7 +2,7 @@
   <ion-page class="rg-notifications-page" :class="{ 'admin-notifications-page': isAdmin }">
     <!-- ADMIN: same persistent sidebar as AdminDashboardPage.vue. -->
     <ion-menu
-      v-if="isAdmin"
+      v-if="isAdmin && $route.name === 'Notifications'"
       content-id="notifications-main"
       menu-id="notifications-admin-menu"
       type="overlay"
