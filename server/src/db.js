@@ -1,8 +1,9 @@
 
+import tls from 'node:tls';
 import { config as loadEnv } from 'dotenv';
 import pg from 'pg';
 
-// Load environment variables for local development
+// Load local environment variables
 loadEnv({
   path: new URL('../../.env', import.meta.url)
 });
@@ -14,14 +15,14 @@ if (!databaseUrl) {
   throw new Error('DATABASE_URL is missing.');
 }
 
-// Supabase SSL CA certificate
+// Load Supabase SSL CA certificate
 const caCertificate = (
   process.env.SUPABASE_CA_CERT || ''
 )
   .replace(/\\n/g, '\n')
   .trim();
 
-// Require verified SSL certificate on production
+// Require Supabase certificate in production
 if (
   process.env.NODE_ENV === 'production' &&
   !caCertificate
@@ -31,44 +32,54 @@ if (
   );
 }
 
-// Configure PostgreSQL connection
+// Parse PostgreSQL connection string
 const parsedUrl = new URL(databaseUrl);
 
-// Prevent URL SSL parameters from overriding
-// the explicit SSL certificate configuration
-if (caCertificate) {
-  for (const parameter of [
-    'sslmode',
-    'sslrootcert',
-    'sslcert',
-    'sslkey'
-  ]) {
-    parsedUrl.searchParams.delete(parameter);
-  }
+// Remove SSL URL parameters because they can
+// override the explicit node-postgres SSL config.
+for (const parameter of [
+  'sslmode',
+  'sslrootcert',
+  'sslcert',
+  'sslkey',
+  'ssl'
+]) {
+  parsedUrl.searchParams.delete(parameter);
 }
 
-// PostgreSQL connection pool
-export const pool = new pg.Pool({
-  connectionString: parsedUrl.toString(),
+// Configure secure SSL connection
+const sslConfig = {
+  rejectUnauthorized: true,
 
   ...(caCertificate
     ? {
-        ssl: {
-          ca: caCertificate,
-          rejectUnauthorized: true
-        }
+        ca: [
+          ...tls.rootCertificates,
+          caCertificate
+        ]
       }
-    : {}),
+    : {})
+};
+
+// Create PostgreSQL connection pool
+export const pool = new pg.Pool({
+  connectionString: parsedUrl.toString(),
+
+  ssl: sslConfig,
 
   max: Number(process.env.DB_POOL_MAX || 5),
-  connectionTimeoutMillis: 10000
+
+  connectionTimeoutMillis: 10000,
+
+  idleTimeoutMillis: 30000
 });
 
 // Execute SQL queries
-export const q = (sql, args = []) =>
-  pool.query(sql, args);
+export const q = (sql, args = []) => {
+  return pool.query(sql, args);
+};
 
-// Database transactions
+// Execute database transactions
 export async function tx(fn) {
   const client = await pool.connect();
 
@@ -82,6 +93,7 @@ export async function tx(fn) {
     return result;
   } catch (error) {
     await client.query('ROLLBACK');
+
     throw error;
   } finally {
     client.release();
@@ -91,7 +103,9 @@ export async function tx(fn) {
 // API error helper
 export const fail = (status, message) => {
   const error = new Error(message);
+
   error.status = status;
+
   throw error;
 };
 
@@ -103,10 +117,23 @@ export const logAction = (
   kind,
   id,
   details
-) =>
-  client.query(
+) => {
+  return client.query(
     `INSERT INTO audit_logs
-      (actor_id, action, target_type, target_id, details)
+      (
+        actor_id,
+        action,
+        target_type,
+        target_id,
+        details
+      )
      VALUES ($1, $2, $3, $4, $5)`,
-    [who, action, kind, id, details]
+    [
+      who,
+      action,
+      kind,
+      id,
+      details
+    ]
   );
+};

@@ -14,9 +14,24 @@ import volunteerRoutes from './volunteerRoutes.js';
 if(!process.env.DATABASE_URL||!process.env.JWT_SECRET||process.env.JWT_SECRET.length<32||process.env.JWT_SECRET.startsWith('REPLACE_')){
   throw new Error('Set DATABASE_URL and a strong JWT_SECRET (at least 32 characters) in server environment.');
 }
-const app=express();
+
+const app = express();
+
+// FIX: Trust the Render reverse proxy.
+// Required for proper client IP handling and rate limiting.
+app.set('trust proxy', 1);
+
+// Disable Express identification header.
 app.disable('x-powered-by');
-app.use(helmet({crossOriginResourcePolicy:{policy:'cross-origin'}}));
+
+// Security middleware.
+app.use(
+  helmet({
+    crossOriginResourcePolicy: {
+      policy: 'cross-origin'
+    }
+  })
+);
 app.use(cors({origin:(process.env.CLIENT_ORIGIN||'http://localhost:5173').split(',').map(v=>v.trim())}));
 app.use(express.json({limit:'80kb'}));
 app.use('/api/auth',rateLimit({windowMs:15*60*1000,limit:30,standardHeaders:'draft-7',legacyHeaders:false}));
