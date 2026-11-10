@@ -1,0 +1,118 @@
+/* RELIEF GO theme: dark green primary with complementary green accents */
+
+:root {
+  /* Primary: dark green */
+  --ion-color-primary: #173729;
+  --ion-color-primary-rgb: 23, 55, 41;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #112b20;
+  --ion-color-primary-tint: #2d5841;
+
+  /* Secondary: accent green */
+  --ion-color-secondary: #be563b;
+  --ion-color-secondary-rgb: 190, 86, 59;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #a84b32;
+  --ion-color-secondary-tint: #c97056;
+
+  /* White backgrounds */
+  --ion-background-color: #fbf0dc;
+  --ion-background-color-rgb: 251, 240, 220;
+  --ion-text-color: #173729;
+  --ion-text-color-rgb: 23, 55, 41;
+
+  /* Rounded corners used across the app */
+  --rg-radius: 16px;
+  --rg-green-soft: #e7eadb;
+}
+
+ion-card {
+  border-radius: var(--rg-radius);
+  box-shadow: 0 2px 10px rgba(23, 55, 41, 0.12);
+}
+
+ion-button {
+  --border-radius: 999px;
+  text-transform: none;
+  font-weight: 600;
+}
+
+ion-progress-bar {
+  height: 10px;
+  border-radius: 999px;
+  --progress-background: var(--ion-color-secondary);
+  --background: var(--rg-green-soft);
+}
+
+/* Welcome-page palette and compact, accessible field/button defaults. */
+:root{--rg-forest:#173729;--rg-cream:#fbf0dc;--rg-terracotta:#be563b;--rg-gold:#f3b75d;--rg-field-border:#d9cbb8}
+ion-button{--border-radius:11px;--box-shadow:none;font-weight:700;letter-spacing:.15px}
+ion-button:focus-visible::part(native),button:focus-visible,a:focus-visible{outline:2px solid #be563b;outline-offset:3px}
+.member-shell-enabled ion-input,.member-shell-enabled ion-textarea,.member-shell-enabled ion-select{--highlight-color-focused:#be563b;--border-color:#d9cbb8}
+.member-shell-enabled input:not([type=checkbox]):not([type=radio]),.member-shell-enabled select,.member-shell-enabled textarea{border-radius:10px}
+.member-shell-enabled .form-card,.member-shell-enabled .form-section,.member-shell-enabled .dashboard-section,.member-shell-enabled .activity-card{box-shadow:0 3px 15px #1737290a}
+.member-shell-enabled .form-section,.member-shell-enabled .form-card{max-width:100%}
+.member-shell-enabled .error,.member-shell-enabled .form-error,.member-shell-enabled .register-error,.member-shell-enabled .inline-error{line-height:1.5;overflow-wrap:anywhere}
+@media(max-width:600px){.member-shell-enabled .form-section,.member-shell-enabled .form-card{padding:clamp(15px,3.7vw,22px)}}
+
+
+/* ReliefGO design system. Welcome page remains the visual source of truth.
+   Consistent focus, disabled states, input errors, accessible tap sizes, and
+   responsive card sizes across Admin, Organizer, Donor, and volunteer pages. */
+:root{
+  --rg-primary:#173729;
+  --rg-primary-hover:#2d5841;
+  --rg-surface:#fffdf5;
+  --rg-panel:#fbf0dc;
+  --rg-accent:#be563b;
+  --rg-gold:#f3b75d;
+  --rg-error:#a33d33;
+  --rg-border:#d9cbb8;
+  --rg-ring:0 0 0 3px #be563b36;
+}
+ion-page:not(.welcome-page){--ion-color-primary:#173729;--ion-color-secondary:#be563b;--ion-background-color:#fbf0dc}
+ion-page:not(.welcome-page) :is(button, ion-button, input, select, textarea, ion-input, ion-textarea, ion-select){font-family:inherit}
+ion-page:not(.welcome-page) :is(input:not([type=checkbox]):not([type=radio]),select,textarea){max-width:100%;min-height:40px;box-sizing:border-box;border-radius:10px}
+ion-page:not(.welcome-page) :is(input:not([type=checkbox]):not([type=radio]),select,textarea,ion-input,ion-select,ion-textarea):focus-visible{outline:2px solid #be563b;outline-offset:2px}
+ion-page:not(.welcome-page) :is(input,select,textarea,ion-input,ion-select,ion-textarea)[aria-invalid="true"]{border-color:var(--rg-error)!important;--border-color:var(--rg-error)!important;--highlight-color-focused:var(--rg-error)}
+ion-page:not(.welcome-page) :is(input,select,textarea,ion-input,ion-select,ion-textarea):disabled{opacity:.6;cursor:not-allowed}
+ion-page:not(.welcome-page) :is(button,ion-button):disabled{opacity:.55;cursor:not-allowed}
+ion-page:not(.welcome-page) :is(.form-error,.error-message,.register-error,.inline-error,.rg-live-hint){overflow-wrap:anywhere;font-size:12px;line-height:1.5}
+ion-page:not(.welcome-page) :is(.card,.form-card,.form-section,.dashboard-card,.activity-card){max-width:100%;min-width:0}
+ion-page:not(.welcome-page) :is(.shell,.page-shell,.dashboard-shell,.dashboard-main){box-sizing:border-box}
+ion-page:not(.welcome-page) :is(button,ion-button,.card-action,.btn,.action-button){transition:background-color .15s ease,color .15s ease,border-color .15s ease,box-shadow .15s ease}
+ion-page:not(.welcome-page) :is(button,ion-button,.card-action,.btn,.action-button):focus-visible{outline:2px solid var(--rg-accent);outline-offset:3px}
+/* Plain action buttons in volunteer pages use the primary forest tone;
+   secondary actions use cream/gold and destructive ones terracotta. */
+ion-page:not(.welcome-page) .shell button:not(.secondary):not(.danger):not(.back):not(.menu-toggle){background:#173729;color:#fffaf0}
+ion-page:not(.welcome-page) .shell button.secondary{background:#f3e6c9;color:#173729;border:1px solid #d9cbb8}
+ion-page:not(.welcome-page) .shell button.danger{background:#ad4935;color:#fff}
+ion-page:not(.welcome-page) .shell button:not(:disabled):hover{filter:brightness(1.08)}
+ion-page:not(.welcome-page) .shell button:disabled{opacity:.5;cursor:not-allowed}
+ion-page:not(.welcome-page) .shell .card{box-shadow:0 3px 16px #1737290d}
+ion-page:not(.welcome-page) :is(.field-group,.form-group,.input-group) .rg-live-hint{display:block;margin:5px 1px 1px;color:var(--rg-error);font-weight:600}
+@media(max-width:600px){ion-page:not(.welcome-page) :is(.shell,.page-shell){padding-left:clamp(12px,3vw,20px);padding-right:clamp(12px,3vw,20px)}ion-page:not(.welcome-page) :is(.card,.form-card){overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){ion-page:not(.welcome-page) :is(button,ion-button,.card-action,.btn,.action-button){transition:none}}
+
+/* 2026 UI consistency pass — shared sizing and actions, scoped away from welcome/login. */
+:root{--rg-action-height:44px;--rg-action-radius:12px;--rg-action-gap:10px}
+ion-page:not(.welcome-page):not(.login-page):not(.register-page) :is(.nav-back,.back-link,.home-link,.back-button,.btn-back,.back-to-home){
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--rg-action-height);
+  padding:9px 16px;border:1px solid #173729;border-radius:var(--rg-action-radius);
+  background:#173729!important;color:#fff!important;text-decoration:none;font-weight:700;line-height:1.25;
+  transition:background-color .18s ease,box-shadow .18s ease;
+}
+ion-page:not(.welcome-page):not(.login-page):not(.register-page) :is(.nav-back,.back-link,.home-link,.back-button,.btn-back,.back-to-home):hover{background:#2d5841!important;color:#fff!important}
+ion-page:not(.welcome-page):not(.login-page):not(.register-page) :is(.nav-back,.back-link,.home-link,.back-button,.btn-back,.back-to-home):focus-visible{outline:3px solid #f3b75d;outline-offset:2px}
+ion-page:not(.welcome-page) :is(.card-action,.btn,.action-button,.secondary-link,.new-campaign){min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;line-height:1.35;border-radius:12px;text-decoration:none}
+ion-page:not(.welcome-page) :is(.card-actions,.action-grid,.action-row,.button-row,.record-buttons,.buttons){gap:var(--rg-action-gap)}
+ion-page:not(.welcome-page) :is(.card,.campaign-card,.activity-card,.dashboard-card){min-width:0;overflow-wrap:anywhere}
+ion-page:not(.welcome-page) :is(.card img,.campaign-photo img,.card-image img){max-width:100%;object-fit:cover}
+ion-page:not(.welcome-page) :is(.btn.outline,.card-action:not(.primary-action),.action-button){background:#efe1c4;color:#173729;border:1px solid #d4c3a2}
+ion-page:not(.welcome-page) :is(.btn.outline,.card-action:not(.primary-action),.action-button):hover{background:#e4d3b2;color:#173729}
+.rg-sidebar-logout{display:flex;align-items:center;justify-content:center;gap:9px;min-height:44px;width:100%;margin-top:14px;border-radius:12px;background:#f3b75d;color:#173729;font:800 12px 'Segoe UI',sans-serif;border:1px solid #f3b75d;cursor:pointer}
+.rg-sidebar-logout:hover{background:#ffdfa3}.rg-sidebar-logout:focus-visible{outline:3px solid white;outline-offset:2px}
+.rg-logout-confirmation .alert-button.rg-logout-accept{color:#173729;font-weight:800}
+@media(max-width:720px){ion-page:not(.welcome-page) :is(.card-actions,.record-buttons,.buttons){align-items:stretch}ion-page:not(.welcome-page) :is(.card-actions>a,.card-actions>button){flex:1 1 160px}}

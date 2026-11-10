@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reliefgo
+      POSTGRES_USER: reliefgo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local_dev_change_me}
+    ports: ["127.0.0.1:5433:5432"]
+    volumes:
+      - reliefgo_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reliefgo -d reliefgo"]
+      interval: 5s
+      retries: 15
+volumes:
+  reliefgo_pgdata:

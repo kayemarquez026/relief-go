@@ -1,0 +1,13 @@
+import 'dotenv/config';
+import bcrypt from 'bcryptjs';
+import {pool,q} from './db.js';
+import {nameRule,phoneRule,emailRule} from './validation.js';
+const email=emailRule.parse(process.env.ADMIN_EMAIL||'');
+const name=nameRule.parse(process.env.ADMIN_NAME||'');
+const phone=phoneRule.parse(process.env.ADMIN_PHONE||'');
+const password=process.env.ADMIN_PASSWORD||'';
+if(password.length<12||password.startsWith('REPLACE_'))throw new Error('Set a strong custom ADMIN_PASSWORD of at least 12 characters in .env.');
+const hash=await bcrypt.hash(password,12);
+const result=await q("INSERT INTO users(name,email,phone,password_hash,role) VALUES($1,$2,$3,$4,'admin') ON CONFLICT DO NOTHING RETURNING id",[name,email,phone,hash]);
+console.log(result.rowCount?'Admin account created.':'Admin already exists; no changes made.');
+await pool.end();
